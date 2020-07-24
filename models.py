@@ -37,17 +37,8 @@ class Net(nn.Module):
         nn.init.xavier_uniform_(self.conv3.weight)
         nn.init.xavier_uniform_(self.conv4.weight)
         
-        self.act1 = nn.ELU()
-        self.act2 = nn.ELU()
-        self.act3 = nn.ELU()
-        self.act4 = nn.ELU()
-        self.act5 = nn.ELU()
-        self.act6 = nn.Linear(linear_size_out, linear_size_out)
+        self.act = nn.Linear(linear_size_out, linear_size_out)
         
-        self.drop1 = nn.Dropout(0.1)
-        self.drop2 = nn.Dropout(0.2)
-        self.drop3 = nn.Dropout(0.3)
-        self.drop4 = nn.Dropout(0.4)
         self.drop5 = nn.Dropout(0.5)
         self.drop6 = nn.Dropout(0.6)
 
@@ -63,24 +54,16 @@ class Net(nn.Module):
         ## TODO: Define the feedforward behavior of this model
         ## x is the input image and, as an example, here you may choose to include a pool/conv step:
         flat = nn.Flatten()
-        x = self.conv1(x)
-        x = F.max_pool2d(self.act1(x), kernel_size=2, stride=2)
-        x = self.drop1(x)
-        x = self.conv2(x)
-        x = F.max_pool2d(self.act2(x), kernel_size=2, stride=2)
-        x = self.drop2(x)
-        x = self.conv3(x)
-        x = F.max_pool2d(self.act3(x), kernel_size=2, stride=2)
-        x = self.drop3(x)
-        x = self.conv4(x)
-        x = F.max_pool2d(self.act4(x), kernel_size=2, stride=2)
-        x = self.drop4(x)
-        x = flat(x)
-        x = self.dense1(x)
-        x = self.act5(x)
-        x = self.drop5(x)
-        x = self.dense2(x)
-        x = self.act6(x)
-        x = self.drop6(x)
+        x = F.dropout(F.max_pool2d(F.elu(self.conv1(x)), kernel_size=2, stride=2), p=0.1)
+        x = F.dropout(F.max_pool2d(F.elu(self.conv2(x)), kernel_size=2, stride=2), p=0.2)
+        x = F.dropout(F.max_pool2d(F.elu(self.conv3(x)), kernel_size=2, stride=2), p=0.3)
+        x = F.dropout(F.max_pool2d(F.elu(self.conv4(x)), kernel_size=2, stride=2), p=0.4)
+       
+        x = flat(x) 
+
+        x = F.dropout(F.elu(self.dense1(x)), p=0.5)
+        x = F.dropout(self.act(self.dense2(x)), p=0.6)
+
         x = self.dense3(x)
+
         return x
