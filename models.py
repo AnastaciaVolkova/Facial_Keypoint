@@ -22,15 +22,16 @@ class Net(nn.Module):
         # 1 input image channel (grayscale), 32 output channels/feature maps, 5x5 square convolution kernel
         ## Note that among the layers to add, consider including:
         # maxpooling layers, multiple conv layers, fully-connected layers, and other layers (such as dropout or batch normalization) to avoid overfitting
+        w2 = 13 
        
-        linear_size_in = 17*17*256
-        linear_size_out = 17*256 
+        linear_size_in = w2*w2*256
+        linear_size_out = w2*256 
         linear_size_out_2 = 136 
  
-        self.conv1 = nn.Conv2d(1, 32, 4, padding=1)
-        self.conv2 = nn.Conv2d(32, 64, 3, padding=1)
-        self.conv3 = nn.Conv2d(64, 128, 2, padding=1)
-        self.conv4 = nn.Conv2d(128, 256, 1, padding=1)
+        self.conv1 = nn.Conv2d(1, 32, 4)
+        self.conv2 = nn.Conv2d(32, 64, 3)
+        self.conv3 = nn.Conv2d(64, 128, 2)
+        self.conv4 = nn.Conv2d(128, 256, 1)
         
         self.act1 = nn.ELU()
         self.act2 = nn.ELU()
@@ -39,10 +40,10 @@ class Net(nn.Module):
         self.act5 = nn.ELU()
         self.act6 = nn.Linear(linear_size_out, linear_size_out)
         
-        self.pool1 = nn.MaxPool2d(2, padding=1, stride=2)
-        self.pool2 = nn.MaxPool2d(2, padding=1, stride=2)
-        self.pool3 = nn.MaxPool2d(2, padding=1, stride=2)
-        self.pool4 = nn.MaxPool2d(2, padding=1, stride=2)
+        self.pool1 = nn.MaxPool2d(2, stride=2)
+        self.pool2 = nn.MaxPool2d(2, stride=2)
+        self.pool3 = nn.MaxPool2d(2, stride=2)
+        self.pool4 = nn.MaxPool2d(2, stride=2)
 
         self.drop1 = nn.Dropout(0.1)
         self.drop2 = nn.Dropout(0.2)
