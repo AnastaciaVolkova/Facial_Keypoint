@@ -32,6 +32,10 @@ class Net(nn.Module):
         self.conv2 = nn.Conv2d(32, 64, 3)
         self.conv3 = nn.Conv2d(64, 128, 2)
         self.conv4 = nn.Conv2d(128, 256, 1)
+        nn.init.xavier_uniform_(self.conv1.weight)
+        nn.init.xavier_uniform_(self.conv2.weight)
+        nn.init.xavier_uniform_(self.conv3.weight)
+        nn.init.xavier_uniform_(self.conv4.weight)
         
         self.act1 = nn.ELU()
         self.act2 = nn.ELU()
