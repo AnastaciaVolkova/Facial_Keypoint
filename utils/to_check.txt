@@ -1,0 +1,4 @@
+how input data is scaled? 0 1, -1 1  chech weight initialization
+batch size
+padding
+kernel size
