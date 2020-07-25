@@ -56,11 +56,11 @@ class Net(nn.Module):
         ## TODO: Define the feedforward behavior of this model
         ## x is the input image and, as an example, here you may choose to include a pool/conv step:
         flat = nn.Flatten()
-        x = F.dropout(F.max_pool2d(F.relu(self.conv1(x)), kernel_size=2, stride=2), p=0.1)
-        x = F.dropout(F.max_pool2d(F.relu(self.conv2(x)), kernel_size=2, stride=2), p=0.1)
-        x = F.dropout(F.max_pool2d(F.relu(self.conv3(x)), kernel_size=2, stride=2), p=0.2)
-        x = F.dropout(F.max_pool2d(F.relu(self.conv4(x)), kernel_size=2, stride=2), p=0.3)
-        x = F.dropout(F.max_pool2d(F.relu(self.conv5(x)), kernel_size=2, stride=2), p=0.4)
+        x = F.max_pool2d(F.relu(self.conv1(x)), kernel_size=2, stride=2)
+        x = F.max_pool2d(F.relu(self.conv2(x)), kernel_size=2, stride=2)
+        x = F.max_pool2d(F.relu(self.conv3(x)), kernel_size=2, stride=2)
+        x = F.max_pool2d(F.relu(self.conv4(x)), kernel_size=2, stride=2)
+        x = F.max_pool2d(F.relu(self.conv5(x)), kernel_size=2, stride=2)
 
         x = flat(x) 
         
